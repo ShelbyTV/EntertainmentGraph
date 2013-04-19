@@ -77,7 +77,7 @@ var reduceDashboardEntries = function(videoId, values){
 
 // Map Reduce
 // NB: The limit used here is ~1.5x greater than the current count of matching documets
-var daysAgoId = ObjectId((Math.floor((new Date())/1000) - 7*24*60*60).toString(16) + "0000000000000000");
+var daysAgoId = ObjectId((Math.floor((new Date())/1000) - 5*24*60*60).toString(16) + "0000000000000000");
 db.dashboard_entries.mapReduce( mapDashboardEntries, reduceDashboardEntries, {
   query: {_id:{$gt: daysAgoId}},
   sort: {_id:1},
