@@ -26,7 +26,7 @@ var unionOfStringArrays = function(arr1, arr2){
   return union;
 };
 
-//XXX until clean data filters through sufficiently
+//no longer used, potentially useful helper
 var uniqueCount = function(arr){
   var objs = {};
   for(var i = 0; i < arr.length; i++){
@@ -42,12 +42,11 @@ var viewWeight = 5;       //shelby views          - a1
 var fullViewWeight = 15;  //shelby complete views - a11
 var computeScore = function(prioritizedDashboardEntry){
   var score = 0;
-  //XXX until clean data filters through sufficiently
-  score += (uniqueCount(prioritizedDashboardEntry.b1) * posterWeight);
-  score += (uniqueCount(prioritizedDashboardEntry.a1) * viewWeight);
-  score += (uniqueCount(prioritizedDashboardEntry.a8) * likeWeight);
-  score += (uniqueCount(prioritizedDashboardEntry.a9) * rollWeight);
-  score += (uniqueCount(prioritizedDashboardEntry.a11) * fullViewWeight);
+  score += (prioritizedDashboardEntry.b1 * posterWeight);
+  score += (prioritizedDashboardEntry.a1 * viewWeight);
+  score += (prioritizedDashboardEntry.a8 * likeWeight);
+  score += (prioritizedDashboardEntry.a9 * rollWeight);
+  score += (prioritizedDashboardEntry.a11 * fullViewWeight);
   return score;
 };
 

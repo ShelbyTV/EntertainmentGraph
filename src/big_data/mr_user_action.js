@@ -64,7 +64,7 @@ var reduceUserActions = function(videoId, values){
 };
 
 
-var daysAgoId = ObjectId((Math.floor((new Date())/1000) - 9*24*60*60).toString(16) + "0000000000000000");
+var daysAgoId = ObjectId((Math.floor((new Date())/1000) - 5*24*60*60).toString(16) + "0000000000000000");
 db.user_actions.mapReduce( mapUserActions, reduceUserActions, {
   query: {_id:{$gt: daysAgoId}, a: {$in:[1,8,9,11]} },
   out: {
