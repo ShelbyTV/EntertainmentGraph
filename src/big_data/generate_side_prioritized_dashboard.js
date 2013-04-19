@@ -42,11 +42,11 @@ var viewWeight = 5;       //shelby views          - a1
 var fullViewWeight = 15;  //shelby complete views - a11
 var computeScore = function(prioritizedDashboardEntry){
   var score = 0;
-  score += (prioritizedDashboardEntry.b1 * posterWeight);
-  score += (prioritizedDashboardEntry.a1 * viewWeight);
-  score += (prioritizedDashboardEntry.a8 * likeWeight);
-  score += (prioritizedDashboardEntry.a9 * rollWeight);
-  score += (prioritizedDashboardEntry.a11 * fullViewWeight);
+  score += (prioritizedDashboardEntry.b1.length * posterWeight);
+  score += (prioritizedDashboardEntry.a1.length * viewWeight);
+  score += (prioritizedDashboardEntry.a8.length * likeWeight);
+  score += (prioritizedDashboardEntry.a9.length * rollWeight);
+  score += (prioritizedDashboardEntry.a11.length * fullViewWeight);
   return score;
 };
 
