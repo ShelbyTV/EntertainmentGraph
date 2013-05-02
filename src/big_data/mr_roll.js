@@ -53,8 +53,7 @@ db.rolls.mapReduce( mapRolls, reduceRolls, {
   /// Not looking at faux rolls as we only care about "real" friendships
   query: {n:{$nin:[11,12,13,14]}},
   out: {
-    replace: 'mr__friendships',
-    nonAtomic: true
+    replace: 'mr__friendships'
   }
 });
 

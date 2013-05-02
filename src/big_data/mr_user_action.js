@@ -68,8 +68,7 @@ var daysAgoId = ObjectId((Math.floor((new Date())/1000) - 9*24*60*60).toString(1
 db.user_actions.mapReduce( mapUserActions, reduceUserActions, {
   query: {_id:{$gt: daysAgoId}, a: {$in:[1,8,9,11]} },
   out: {
-    replace: 'mr__video_actions',
-    nonAtomic: true
+    replace: 'mr__video_actions'
   }
 });
 

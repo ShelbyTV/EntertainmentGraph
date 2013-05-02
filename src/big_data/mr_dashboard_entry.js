@@ -83,8 +83,7 @@ db.dashboard_entries.mapReduce( mapDashboardEntries, reduceDashboardEntries, {
   sort: {_id:1},
   limit: 10000000,
   out: {
-    replace: 'mr__video_dashboard_actions',
-    nonAtomic: true
+    replace: 'mr__video_dashboard_actions'
   }
 });
 
