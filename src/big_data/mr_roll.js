@@ -22,7 +22,9 @@ var mapRolls = function(){
   if(this.following_users){
     for(var i = 0; i < this.following_users.length; i++){
       var value = {};
-      value[this.a] = 1;
+      // explicitly convert the ObjectId to a string the way we want to
+      // by using .valueOf()
+      value[this.a.valueOf()] = 1;
       emit(this.following_users[i].a, value);
     }
   }

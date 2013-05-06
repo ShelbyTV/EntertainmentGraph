@@ -32,7 +32,7 @@ var mapDashboardEntries = function(){
       b1: {},
       b2: {}
     };
-    
+
     // explicitly convert ObjectIds to strings the way we want to
     // by using .valueOf()
     value.b1[this.f.valueOf()] = 1;
@@ -40,9 +40,9 @@ var mapDashboardEntries = function(){
       id: this._id,
       b: this.b, //roll_id
       c: this.c, //frame_id
-      f: this.f, //actor_id
+      f: this.f //actor_id
     };
-  
+
     emit(this.g, value);
   }
 };
@@ -63,7 +63,7 @@ var reduceDashboardEntries = function(videoId, values){
     b2: {}
   },
   key;
-  
+
   for(var i = 0; i < values.length; i++){
     for(key in values[i].b1){
       reducedValue.b1[key] = values[i].b1[key];
@@ -72,7 +72,7 @@ var reduceDashboardEntries = function(videoId, values){
       reducedValue.b2[key] = values[i].b2[key];
     }
   }
-  
+
   return reducedValue;
 };
 
