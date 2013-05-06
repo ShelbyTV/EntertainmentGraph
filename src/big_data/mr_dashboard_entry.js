@@ -33,8 +33,10 @@ var mapDashboardEntries = function(){
       b2: {}
     };
     
-    value.b1[this.f] = 1;
-    value.b2[this.a] = {
+    // explicitly convert ObjectIds to strings the way we want to
+    // by using .valueOf()
+    value.b1[this.f.valueOf()] = 1;
+    value.b2[this.a.valueOf()] = {
       id: this._id,
       b: this.b, //roll_id
       c: this.c, //frame_id
@@ -94,3 +96,4 @@ var dur = end-start;
 print("mr_dashboard_entry.js -- Completed at "+end);
 print("mr_dashboard_entry.js -- Duration: "+dur/60000+"m");
 /* End Timing */
+

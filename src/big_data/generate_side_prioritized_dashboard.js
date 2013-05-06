@@ -64,7 +64,7 @@ db.mr__prioritized_dashboard_collated.find({ lock:{$exists:false} }).forEach( fu
   //abort if we couldn't obtain lock
   if(!lockedPDBE || lockedPDBE.lock != 1){
     processed++;
-    print("Skipping locked entry "+processed+"/"+prioritizedDashboardCollatedCount);
+    //print("Skipping locked entry "+processed+"/"+prioritizedDashboardCollatedCount);
   } else {
   
     //make sure we have friends
@@ -72,9 +72,9 @@ db.mr__prioritized_dashboard_collated.find({ lock:{$exists:false} }).forEach( fu
     usersFriends = db.mr__friendships.findOne({_id:userId});
     if(!usersFriends){
       processed++;
-      print("No friends ("+userId+"), skipping "+processed+"/"+prioritizedDashboardCollatedCount);
+      //print("No friends ("+userId+"), skipping "+processed+"/"+prioritizedDashboardCollatedCount);
     } else {
-      //self should not be considered a friend for the purposes of our calculations
+      //user should not be considered a "friend" for the purposes of our calculations
       delete usersFriends.value[userId.valueOf()];
       usersFriendsStringArray = Object.keys(usersFriends.value);
   
@@ -111,7 +111,7 @@ db.mr__prioritized_dashboard_collated.find({ lock:{$exists:false} }).forEach( fu
       }
   
       processed++;
-      print("Processed "+processed+"/"+prioritizedDashboardCollatedCount);
+      //print("Processed "+processed+"/"+prioritizedDashboardCollatedCount);
     }
   }
 
@@ -126,3 +126,4 @@ print("generate_side_prioritized_dashboard.js -- Duration: "+dur/60000+"m   [Pro
 
 
 //next, once all documents are in the side collection, they are atomically swapped with the previous production queryable collection
+

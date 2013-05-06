@@ -33,7 +33,7 @@ var mapUserActions = function(){
     
     //NB: use this.b.valueOf() when running on mongo 2.2+
     //NB: even if console is 2.2+, when connecting to mongod < 2.2 need to use .toString()
-    value['a'+this.a].push(this.b.toString());
+    value['a'+this.a].push(this.b.valueOf());
     
     emit(this.d, value);
   }
@@ -79,3 +79,4 @@ var dur = end-start;
 print("mr_user_action.js -- Completed at "+end);
 print("mr_user_action.js -- Duration: "+dur/60000+"m");
 /* End Timing */
+

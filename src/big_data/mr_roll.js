@@ -18,7 +18,7 @@ var mapRolls = function(){
   // Roll.a stores roll's creator's user_id (our value)
   // Roll.following_users stores the embedded following users document which stores
   //  following_user.a stores the following user's user_id (our key)
-  
+
   if(this.following_users){
     for(var i = 0; i < this.following_users.length; i++){
       var value = {};
@@ -35,23 +35,31 @@ var mapRolls = function(){
 var reduceRolls = function(userId, values){
   var reducedValue = {},
   key;
-  
+
   for(var i = 0; i < values.length; i++){
     for(key in values[i]){
       reducedValue[key] = 1;
     }
   }
-  
+
   return reducedValue;
 };
 
 
-// NB: This MR doesn't seem to kill performance, but should be run off peak.
-//  It's the most expensive thing we're running for EG/PP...
-//  Seeing increase in lock & page faults on primary when running this
+// Map Reduce
+// upper limit as of 3/26/13: 36 000 000
+// timing                      1 000 000  -- 00:30
+//                             5 000 000  -- 04:00-05:00  --non-faux-- 03:28
+//                            10 000 000  -- 15:00        --non-faux-- 10:20
+//                            20 000 000  --   ?          --non-faux-- 72:00
+// NB: the above don't seem to kill performance,
+//  but should be run off peak,
+//  they're the most expensive things we're running...
+//  Seeing increase in lock & page faults on primary when I run this
+// NB: Not looking at faux rolls as we only care about "real" friendships
 db.rolls.mapReduce( mapRolls, reduceRolls, {
-  /// Not looking at faux rolls as we only care about "real" friendships
   query: {n:{$nin:[11,12,13,14]}},
+  limit: 20000000,
   out: {
     replace: 'mr__friendships'
   }
@@ -64,3 +72,4 @@ var dur = end-start;
 print("mr_roll.js -- Completed at "+end);
 print("mr_roll.js -- Duration: "+dur/60000+"m");
 /* End Timing */
+

@@ -26,7 +26,7 @@ if [ $RUN_FRIENDSHIPS == 1 ]
   then
     # Roll -> Friendships (produces gt-roll-frame/mr__friendships)
     echo ">>>MR Roll -> Friendships ..."
-    mongo gt-db-roll-frame-s0-c/gt-roll-frame -u 'gt_user' -p 'GT/us3r!!!' ~/big_data/mr_roll.js
+    mongo gt-db-roll-frame-s0-a/gt-roll-frame -u 'gt_user' -p 'GT/us3r!!!' ~/big_data/mr_roll.js
   else
     echo ">>>Skiped MR Roll -> Friendships!"
 fi
@@ -43,7 +43,7 @@ mongo gt-db-dashboard-s0-a/gt-dashboard-entry -u 'gt_user' -p 'GT/us3r!!!' ~/big
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo ">>>Remote dump gt-roll-frame/mr__friendships ..."
-mongodump --host gt-db-roll-frame-s0-c -u 'gt_user' -p 'GT/us3r!!!' --db 'gt-roll-frame' --collection 'mr__friendships' --out ~/dump
+mongodump --host gt-db-roll-frame-s0-a -u 'gt_user' -p 'GT/us3r!!!' --db 'gt-roll-frame' --collection 'mr__friendships' --out ~/dump
 echo ">>>Remote dump gt-user-action/mr__video_actions ..."
 mongodump --host gt-db-user-action-s0-b -u 'gt_user' -p 'GT/us3r!!!' --db 'gt-user-action' --collection 'mr__video_actions' --out ~/dump
 echo ">>>Remote dump gt-dashboard-entry/mr__video_dashboard_actions ..."
@@ -82,3 +82,4 @@ wait
 echo ">>>Swap temporary side_prioritized_dashboard to prioritized_dashboard_entries ..."
 mongo localhost/admin -u 'gt_user' -p 'GT/us3r!!!' ~/big_data/atomic_update_prioritized_dashboard.js
 echo ">>>Done!"
+
