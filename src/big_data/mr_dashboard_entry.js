@@ -2,6 +2,20 @@
 //-------------------------------------------------------MR DashboardEntries -> VideoDashboardActions --------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+/* Params */
+//  The current preferred method for passing params to a mongo shell script is to set them as variables in the --eval argument
+//  of the mongo command, then use them in the script.
+//
+//  Params for this script are:
+//  mrLimit (default 10000000): the maximum number of records to process in the mapReduce - very useful for speeding up for debugging
+if (typeof(mrLimit) == 'undefined') {
+  mrLimit = 10000000;
+}
+
+// Example usage:
+// mongo gt-db-dashboard-s0-a/gt-dashboard-entry --eval 'var mrLimit=100' ~/EntertainmentGraph/src/big_data/mr_dashboard_entry.js
+/* End Params */
+
 /* Timing */
 var start = new Date();
 print("mr_dashboard_entry.js -- Starting at "+start);
@@ -79,11 +93,12 @@ var reduceDashboardEntries = function(videoId, values){
 
 // Map Reduce
 // NB: The limit used here is ~1.5x greater than the current count of matching documets
+print("Limiting to " + mrLimit + " records");
 var daysAgoId = ObjectId((Math.floor((new Date())/1000) - 5*24*60*60).toString(16) + "0000000000000000");
 db.dashboard_entries.mapReduce( mapDashboardEntries, reduceDashboardEntries, {
   query: {_id:{$gt: daysAgoId}},
   sort: {_id:1},
-  limit: 10000000,
+  limit: mrLimit,
   out: {
     replace: 'mr__video_dashboard_actions'
   }

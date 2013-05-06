@@ -2,6 +2,20 @@
 //------------------------------------------------------- MR Rolls -> Friendships ----------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+/* Params */
+//  The current preferred method for passing params to a mongo shell script is to set them as variables in the --eval argument
+//  of the mongo command, then use them in the script.
+//
+//  Params for this script are:
+//  mrLimit (default 20000000): the maximum number of records to process in the mapReduce - very useful for speeding up for debugging
+if (typeof(mrLimit) == 'undefined') {
+  mrLimit = 20000000;
+}
+
+// Example usage:
+// mongo gt-db-roll-frame-s0-a/gt-roll-frame --eval 'var mrLimit=100' ~/EntertainmentGraph/src/big_data/mr_roll.js
+/* End Params */
+
 /* Timing */
 var start = new Date();
 print("mr_roll.js -- Starting at "+start);
@@ -59,9 +73,10 @@ var reduceRolls = function(userId, values){
 //  they're the most expensive things we're running...
 //  Seeing increase in lock & page faults on primary when I run this
 // NB: Not looking at faux rolls as we only care about "real" friendships
+print("Limiting to " + mrLimit + " records");
 db.rolls.mapReduce( mapRolls, reduceRolls, {
   query: {n:{$nin:[11,12,13,14]}},
-  limit: 20000000,
+  limit: mrLimit,
   out: {
     replace: 'mr__friendships'
   }
